@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     getStar(vote) {
-      debugger;
       return Math.ceil(vote / 2);
     },
     setAltImg(event) {
@@ -71,12 +70,18 @@ i.fa-solid.fa-star {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
   transform: rotateY(-90deg);
   transition: transform .4s ease-in-out;
   color: white;
+  height: 100%;
+  overflow: auto;
 }
 .card:hover .card-description{
     transform: rotateY(0deg);
+}
+.card {
+    border: 0;
+    overflow: hidden;
 }
 </style>

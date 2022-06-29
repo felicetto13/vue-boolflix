@@ -1,49 +1,76 @@
 import Vue from "vue";
 import axios from "axios";
-import VSwitch from 'v-switch-case'
- 
-Vue.use(VSwitch)
+
 export const state = Vue.observable({
-    moviesList: [],
+    moviesListResearch: [],
     languageMovies: [],
     languageSeries: [],
-    seriesList: [],
+    seriesListResearch: [],
+    movieListUpcoming:[],
+    movieListTopRated:[],
+    movieListPopular:[],
+    getStateInput: true,
 })
 
-export function fetchData (textQuery){
-    axios.get("https://api.themoviedb.org/3/search/movie",{
-        params:{
-            api_key:"d206597de1040586ba02dfac9aaa6cff",
-            query:textQuery,
-            language: "it-IT",
-        }
-    })
-    .then((resp) => {
-        state.moviesList = resp.data.results;
-        for(let i =0; i < state.moviesList.length ; i++){
-            console.log(state.moviesList[i].original_language);
-            if(!state.languageMovies.includes(state.moviesList[i].original_language)){
-                state.languageMovies.push(state.moviesList[i].original_language)
+export function fetchDataResearch (textQuery){
+    if(textQuery != ""){
+        state.getStateInput = false;
+        axios.get("https://api.themoviedb.org/3/search/movie",{
+            params:{
+                api_key:"d206597de1040586ba02dfac9aaa6cff",
+                query:textQuery,
+                language: "it-IT",
             }
-        }
-       
-    })
-    axios.get("https://api.themoviedb.org/3/search/tv",{
-        params:{
-            api_key:"d206597de1040586ba02dfac9aaa6cff",
-            query:textQuery,
-            language: "it-IT",
-        }
-    })
-    .then((resp) => {
-        state.seriesList = resp.data.results;
-        for(let i =0; i < state.seriesList.length ; i++){
-            console.log(state.seriesList[i].original_language);
-            if(!state.languageSeries.includes(state.seriesList[i].original_language)){
-                state.languageSeries.push(state.seriesList[i].original_language)
+        })
+        .then((resp) => {
+            state.moviesListResearch = resp.data.results;
+           
+        })
+        axios.get("https://api.themoviedb.org/3/search/tv",{
+            params:{
+                api_key:"d206597de1040586ba02dfac9aaa6cff",
+                query:textQuery,
+                language: "it-IT",
             }
-        }
-       
-    })
+        })
+        .then((resp) => {
+            state.seriesListResearch = resp.data.results;
+           
+        })
+    }else{
+        state.moviesListResearch= [];
+        state.seriesListResearch= [];
+        state.getStateInput = true;
+    }
 
+}
+
+export function fetchData (){
+    axios.get("https://api.themoviedb.org/3/movie/upcoming",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.movieListUpcoming = resp.data.results;
+       
+    })
+    axios.get("https://api.themoviedb.org/3/movie/top_rated",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.movieListTopRated = resp.data.results;
+       
+    })
+    axios.get("https://api.themoviedb.org/3/movie/popular",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.movieListPopular = resp.data.results;
+       
+    })
 }
