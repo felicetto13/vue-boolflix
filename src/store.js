@@ -9,6 +9,9 @@ export const state = Vue.observable({
     movieListUpcoming:[],
     movieListTopRated:[],
     movieListPopular:[],
+    serieListUpcoming:[],
+    serieListTopRated:[],
+    serieListPopular:[],
     getStateInput: true,
 })
 
@@ -46,6 +49,8 @@ export function fetchDataResearch (textQuery){
 }
 
 export function fetchData (){
+
+    //fetch film
     axios.get("https://api.themoviedb.org/3/movie/upcoming",{
         params:{
             api_key:"d206597de1040586ba02dfac9aaa6cff",
@@ -71,6 +76,36 @@ export function fetchData (){
     })
     .then((resp) => {
         state.movieListPopular = resp.data.results;
+       
+    })
+
+    //fetch series
+
+    axios.get("https://api.themoviedb.org/3/tv/on_the_air",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.serieListUpcoming = resp.data.results;
+       
+    })
+    axios.get("https://api.themoviedb.org/3/tv/top_rated",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.serieListTopRated = resp.data.results;
+       
+    })
+    axios.get("https://api.themoviedb.org/3/tv/popular",{
+        params:{
+            api_key:"d206597de1040586ba02dfac9aaa6cff",
+        }
+    })
+    .then((resp) => {
+        state.serieListPopular = resp.data.results;
        
     })
 }

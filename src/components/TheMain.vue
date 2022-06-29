@@ -26,6 +26,9 @@
           </div>
         </div>
       </div>
+
+        <!-- Film lista Upcoming, Top rated, popular -->
+
     <div v-show="getStatusInput">
 
         <div class="full-container">
@@ -69,6 +72,48 @@
             </div>
           </div>
         </div>
+        <!-- Serie tv lista Upcoming, Top rated, popular -->
+        <div class="full-container">
+          <h2>Serie On Air:</h2>
+    
+          <div class="container-element">
+            <div class="row flex-nowrap">
+              <div
+                class="col"
+                v-for="(upcoming, i) in fetchSeriesUpcoming"
+                :key="i"
+              >
+                <CardSeries :serie="upcoming"></CardSeries>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="full-container">
+          <h2>Film Top Rated:</h2>
+    
+          <div class="container-element">
+            <div class="row flex-nowrap">
+              <div
+                class="col"
+                v-for="(topRated, i) in fetchSeriesTopRated"
+                :key="i"
+              >
+                <CardSeries :serie="topRated"></CardSeries>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="full-container">
+          <h2>Film popolari:</h2>
+    
+          <div class="container-element">
+            <div class="row flex-nowrap">
+              <div class="col" v-for="(popular, i) in fetchSeriesPopular" :key="i">
+                <CardSeries :serie="popular"></CardSeries>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </main>
 </template>
@@ -95,6 +140,15 @@ export default {
     },
     fetchMoviesPopular() {
       return state.movieListPopular;
+    },
+    fetchSeriesUpcoming() {
+      return state.serieListUpcoming;
+    },
+    fetchSeriesTopRated() {
+      return state.serieListTopRated;
+    },
+    fetchSeriesPopular() {
+      return state.serieListPopular;
     },
     getStatusInput() {
         return state.getStateInput;
