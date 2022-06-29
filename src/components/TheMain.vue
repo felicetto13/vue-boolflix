@@ -1,49 +1,55 @@
 <template>
-    <div class="container text-center">
-        <ul>
-            <li v-for="lang in getLanguage" :key="lang">
-            {{ lang }}</li>
-        </ul>
-        <ul class="list-unstyled" v-for="(film,i) in fetchDataMovies" :key="i">
-            <li><strong>Titolo originale: </strong>{{ film.original_title }}</li>
-            <li><strong>Titolo: </strong>{{ film.title }}</li>
-            <li><strong>Lingua Originale: </strong>{{ film.original_language }}</li>
-            <li><strong>Voto: </strong>{{ film.vote_average }}</li>
-        </ul>
-
-        <ul class="list-unstyled" v-for="(serie) in fetchDataSeries" :key="serie">
-            <li><strong>Titolo originale: </strong>{{ serie.original_name }}</li>
-            <li><strong>Titolo: </strong>{{ serie.name }}</li>
-            <li><strong>Lingua Originale: </strong>{{ serie.original_language }}</li>
-            <li><strong>Voto: </strong>{{ serie.vote_average }}</li>
-        </ul>
+  <section>
+    <div class="full-container">
+      <h2>Film ricercati:</h2>
+      <div class="container-element">
+        <div class="row flex-nowrap">
+            <div class="col" v-for="(film, i) in fetchDataMovies" :key="i">
+                 <CardMovies :film="film"></CardMovies>
+            </div>
+        </div>
+      </div>
     </div>
+
+    <div class="full-container">
+      <h2>Serie ricercate:</h2>
+      <div class="container-element">
+        <div class="row flex-nowrap">
+        <div class="col" v-for="(serie, i) in fetchDataSeries" :key="i">
+          <CardSeries :serie="serie"></CardSeries>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import {state} from "../store"
-import {fetchData} from "../store"
+import CardMovies from "./CardMovies.vue";
+import CardSeries from './CardSeries.vue';
+import { state } from "../store";
 export default {
-    computed:
-    {
-        fetchDataMovies(){
-
-            return state.moviesList;
-        },
-        getLanguage(){
-            return state.languageMovies
-        },
-        fetchDataSeries(){
-            return state.seriesList;
-        }
-        
+  components: { CardMovies, CardSeries },
+  computed: {
+    fetchDataMovies() {
+      return state.moviesList;
     },
-    mounted(){
-        fetchData();
-    }
-}
+    fetchDataSeries() {
+      return state.seriesList;
+    },
+  },
+    
+};
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss" >
+.full-container {
+  width: 100%;
+  padding: 2rem 1rem;
+  overflow: hidden;
+}
+.container-element {
+  width: 100%;
+  overflow: auto;
+}
 </style>
