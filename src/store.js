@@ -13,6 +13,9 @@ export const state = Vue.observable({
     serieListTopRated:[],
     serieListPopular:[],
     getStateInput: true,
+    actuallyCard:[],
+    casting: [],
+    genres: []
 })
 
 export function fetchDataResearch (textQuery){
@@ -46,6 +49,38 @@ export function fetchDataResearch (textQuery){
         state.getStateInput = true;
     }
 
+}
+
+//get details casting
+
+export function getCastingData(id){
+    state.casting=[]
+    state.genres=[]
+        axios.get("https://api.themoviedb.org/3/movie/"+ id +"/credits",{
+            params:{
+                api_key:"d206597de1040586ba02dfac9aaa6cff",
+            }
+        })
+        .then((resp) => {
+            for( let i = 0; i < 5; i++){
+                
+                    state.casting.push(resp.data.cast[i].name);
+                
+            }
+            state.casting.join(", ");
+        })
+        axios.get("https://api.themoviedb.org/3/movie/"+ id,{
+            params:{
+                api_key:"d206597de1040586ba02dfac9aaa6cff",
+            }
+        })
+        .then((response) => {
+            for(let i = 0; i< response.data.genres.length; i++){
+                state.genres.push(response.data.genres[i].name);
+            }
+            
+        })
+        
 }
 
 export function fetchData (){

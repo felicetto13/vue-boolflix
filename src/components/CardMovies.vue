@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @mouseover.once="cardSelected(film.id)">
     <div class="img-card">
       <img
         :src="'https://image.tmdb.org/t/p/w342' + film.poster_path"
@@ -8,6 +8,16 @@
       />
     </div>
     <div class="card-description">
+      <span
+        ><strong>Generi: </strong
+        ><span v-for="genres in getGenres" :key="genres">{{
+          genres
+        }}</span></span
+      >
+      <span
+        ><strong>Casting: </strong
+        ><span v-for="cast in getCasting" :key="cast">{{ cast }}</span></span
+      >
       <span>
         <strong>Titolo originale: </strong>{{ film.original_title }}
       </span>
@@ -32,9 +42,20 @@
 </template>
 
 <script>
+import { state } from "../store";
+import { getCastingData } from "../store"
 export default {
   props: {
     film: Object,
+  },
+  computed:
+  {
+    getCasting() {
+      return state.casting.join(", ");
+    },
+    getGenres() {
+      return state.genres.join(", ");
+    },
   },
   methods: {
     getStar(vote) {
@@ -43,6 +64,10 @@ export default {
     setAltImg(event) {
       event.target.src = "img/image_notfound.png";
       event.target.class = "resize-img";
+    },
+    
+    cardSelected(id) {
+      getCastingData(id);
     },
   },
 };
@@ -73,19 +98,20 @@ i.fa-solid.fa-star {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.85);
   transform: rotateY(-90deg);
-  transition: transform .4s ease-in-out;
+  transition: transform 0.4s ease-in-out;
   color: white;
   overflow: auto;
 
-    span{
-        margin-bottom: 10px;
-    }
+  span {
+    margin-bottom: 10px;
+  }
 }
-.card:hover .card-description{
-    transform: rotateY(0deg);
+.card:hover .card-description {
+  transform: rotateY(0deg);
 }
-.card{
-    border: 0;
-    overflow: hidden;
+.card {
+  border: 0;
+  overflow: hidden;
+  cursor: pointer;
 }
 </style>

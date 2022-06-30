@@ -83,5 +83,6 @@ i.fa-solid.fa-star {
 .card {
     border: 0;
     overflow: hidden;
+    cursor: pointer;
 }
 </style>

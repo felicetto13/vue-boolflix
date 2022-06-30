@@ -7,7 +7,7 @@
         <h2>Film ricercati:</h2>
         <div class="container-element">
           <div class="row flex-nowrap">
-            <div class="col" v-for="film in fetchDataMovies" :key="film">
+            <div class="col" @click="cardSelected(film)" v-for="film in fetchDataMovies" :key="film">
               <CardMovies :film="film"></CardMovies>
             </div>
           </div>
@@ -20,7 +20,7 @@
         <h2>Serie ricercate:</h2>
         <div class="container-element">
           <div class="row flex-nowrap">
-            <div class="col" v-for="serie in fetchDataSeries" :key="serie">
+            <div class="col" @click="cardSelected(serie)" v-for="serie in fetchDataSeries" :key="serie">
               <CardSeries :serie="serie"></CardSeries>
             </div>
           </div>
@@ -37,7 +37,7 @@
           <div class="container-element">
             <div class="row flex-nowrap">
               <div
-                class="col"
+                class="col" @click="cardSelected(upcoming)"
                 v-for="(upcoming, i) in fetchMoviesUpcoming"
                 :key="i"
               >
@@ -66,7 +66,7 @@
     
           <div class="container-element">
             <div class="row flex-nowrap">
-              <div class="col" v-for="(popular, i) in fetchMoviesPopular" :key="i">
+              <div class="col" @click="cardSelected(popular)" v-for="(popular, i) in fetchMoviesPopular" :key="i">
                 <CardMovies :film="popular"></CardMovies>
               </div>
             </div>
@@ -79,7 +79,7 @@
           <div class="container-element">
             <div class="row flex-nowrap">
               <div
-                class="col"
+                class="col" @click="cardSelected(upcoming)"
                 v-for="(upcoming, i) in fetchSeriesUpcoming"
                 :key="i"
               >
@@ -94,7 +94,7 @@
           <div class="container-element">
             <div class="row flex-nowrap">
               <div
-                class="col"
+                class="col" @click="cardSelected(topRated)"
                 v-for="(topRated, i) in fetchSeriesTopRated"
                 :key="i"
               >
@@ -108,7 +108,7 @@
     
           <div class="container-element">
             <div class="row flex-nowrap">
-              <div class="col" v-for="(popular, i) in fetchSeriesPopular" :key="i">
+              <div class="col" @click="cardSelected(popular)" v-for="(popular, i) in fetchSeriesPopular" :key="i">
                 <CardSeries :serie="popular"></CardSeries>
               </div>
             </div>
@@ -157,6 +157,7 @@ export default {
   mounted() {
     fetchData();
   },
+  
 };
 </script>
 
