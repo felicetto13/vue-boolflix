@@ -1,4 +1,0 @@
-- name: vue cli plugin s3 deploy action themcaffee
-  # You may pin to the exact commit or the version.
-  # uses: themcaffee/vue-cli-plugin-s3-deploy-action@43d9d3c63133a87decd486bbcced712144c27e7b
-  uses: themcaffee/vue-cli-plugin-s3-deploy-action@v0.2
